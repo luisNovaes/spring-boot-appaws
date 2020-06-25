@@ -51,7 +51,7 @@ public class Request implements Serializable {
 
 	@Column(length = 12, nullable = false)
 	@Enumerated(EnumType.STRING)
-	private RequestState stage;
+	private RequestState state;
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id", nullable = false)
