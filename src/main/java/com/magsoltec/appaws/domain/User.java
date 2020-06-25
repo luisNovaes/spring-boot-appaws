@@ -52,5 +52,7 @@ public class User implements Serializable {
 
 	@OneToMany(mappedBy = "owner")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
+	
+	
 
 }
