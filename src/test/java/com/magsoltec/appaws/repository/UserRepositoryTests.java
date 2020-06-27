@@ -35,7 +35,7 @@ public class UserRepositoryTests {
 
 		User createUser = userRepository.save(user);
 
-		assertThat(createUser.getId()).isEqualTo(22L);
+		assertThat(createUser.getId()).isEqualTo(1L);
 
 	}
 
@@ -43,7 +43,7 @@ public class UserRepositoryTests {
 	@Order(2)
 	public void updateTest() {
 
-		Optional<User> userPresente = userRepository.findById(22L);
+		Optional<User> userPresente = userRepository.findById(1L);
 
 		User user = userPresente.get();
 		user.setName("Luis Magno");
@@ -59,7 +59,7 @@ public class UserRepositoryTests {
 	@Order(3)
 	public void getByIdtest() {
 
-		Optional<User> result = userRepository.findById(22L);
+		Optional<User> result = userRepository.findById(1L);
 		User user = result.get();
 
 		assertThat(user.getPassword()).isEqualTo("ma2020");
@@ -83,7 +83,7 @@ public class UserRepositoryTests {
 
 		User loggedUser = result.get();
 
-		assertThat(loggedUser.getId()).isEqualTo(22L);
+		assertThat(loggedUser.getId()).isEqualTo(1L);
 
 	}
 
