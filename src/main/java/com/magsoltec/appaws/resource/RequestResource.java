@@ -56,7 +56,7 @@ public class RequestResource {
 		return ResponseEntity.ok(requests);
 	}
 
-	@PostMapping("/{id}/request-stages")
+	@GetMapping("/{id}/request-stages")
 	public ResponseEntity<List<RequestStage>> listAllStagesById(@PathVariable(name = "id") Long id) {
 		List<RequestStage> stages = requestStageService.listAllByRequestId(id);
 		return ResponseEntity.ok(stages);
