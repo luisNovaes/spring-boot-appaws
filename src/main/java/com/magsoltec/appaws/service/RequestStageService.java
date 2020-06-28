@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.magsoltec.appaws.domain.RequestStage;
 import com.magsoltec.appaws.domain.enums.RequestState;
+import com.magsoltec.appaws.exception.NotFoundException;
 import com.magsoltec.appaws.repository.RequestRepository;
 import com.magsoltec.appaws.repository.RequestStageRepository;
 
@@ -39,7 +40,7 @@ public class RequestStageService {
 	public RequestStage getById(Long id) {
 
 		Optional<RequestStage> result = requestStageRepository.findById(id);
-		return result.get();
+		return result.orElseThrow(() -> new NotFoundException("There are not request stage with id = " + id));
 	}
 
 	public List<RequestStage> listAllByRequestId(Long requestId) {
