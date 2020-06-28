@@ -44,7 +44,7 @@ public class UserResource {
 
 	}
 
-	@GetMapping("/{id)}")
+	@GetMapping("/{id}")
 	public ResponseEntity<User> getById(@PathVariable("id") Long id) {
 		User user = userService.getById(id);
 		return ResponseEntity.ok(user);
