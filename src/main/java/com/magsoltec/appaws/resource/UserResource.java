@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.magsoltec.appaws.domain.Request;
 import com.magsoltec.appaws.domain.User;
 import com.magsoltec.appaws.dto.USerLoginDto;
+import com.magsoltec.appaws.service.RequestService;
 import com.magsoltec.appaws.service.UserService;
 
 @RestController
@@ -23,6 +25,9 @@ public class UserResource {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RequestService requestService;
 
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody User user) {
@@ -57,6 +62,12 @@ public class UserResource {
 	public ResponseEntity<User> login(@RequestBody USerLoginDto user) {
 		User loggedUser = userService.login(user.getEmail(), user.getPassword());
 		return ResponseEntity.ok(loggedUser);
+	}
+
+	@PostMapping("/{id}/request")
+	public ResponseEntity<List<Request>> listAllRequestsById(@PathVariable(name = "id") Long id) {
+		List<Request> requests = requestService.listAllByOwnerId(id);
+		return ResponseEntity.ok(requests);
 	}
 
 }
