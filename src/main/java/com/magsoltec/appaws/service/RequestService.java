@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.magsoltec.appaws.domain.Request;
 import com.magsoltec.appaws.domain.enums.RequestState;
 import com.magsoltec.appaws.exception.NotFoundException;
+import com.magsoltec.appaws.model.PageModel;
+import com.magsoltec.appaws.model.PageRequestModel;
 import com.magsoltec.appaws.repository.RequestRepository;
 
 @Service
@@ -46,9 +51,32 @@ public class RequestService {
 
 	}
 
+	public PageModel<Request> listAllOnLazyModel(PageRequestModel pr) {
+
+		Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+		Page<Request> page = requestRepository.findAll(pageable);
+
+		PageModel<Request> pm = new PageModel<>((int) page.getTotalElements(), page.getSize(), page.getTotalPages(),
+				page.getContent());
+		return pm;
+
+	}
+
 	public List<Request> listAllByOwnerId(Long ownerId) {
 		List<Request> requests = requestRepository.findAllByOwnerId(ownerId);
 		return requests;
+
+	}
+
+	public PageModel<Request> listAllByOwnerIdLazyModel(Long ownerId, PageRequestModel pr) {
+
+		Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+		Page<Request> page = requestRepository.findAllByOwnerId(ownerId, pageable);
+
+		PageModel<Request> pm = new PageModel<>((int) page.getTotalElements(), page.getSize(), page.getTotalPages(),
+				page.getContent());
+
+		return pm;
 
 	}
 
