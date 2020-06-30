@@ -1,5 +1,7 @@
 package com.magsoltec.appaws.resource;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.magsoltec.appaws.domain.Request;
 import com.magsoltec.appaws.domain.RequestStage;
+import com.magsoltec.appaws.dto.RequestSavedto;
+import com.magsoltec.appaws.dto.RequestUpdateDto;
 import com.magsoltec.appaws.model.PageModel;
 import com.magsoltec.appaws.model.PageRequestModel;
 import com.magsoltec.appaws.service.RequestService;
@@ -30,14 +34,18 @@ public class RequestResource {
 	private RequestStageService requestStageService;
 
 	@PostMapping
-	public ResponseEntity<Request> save(@RequestBody Request request) {
+	public ResponseEntity<Request> save(@RequestBody @Valid RequestSavedto requestDto) {
+		Request request = requestDto.transformToRequest();
 		Request createRequest = requestService.save(request);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createRequest);
 
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Request> update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
+	public ResponseEntity<Request> update(@PathVariable(name = "id") Long id,
+			@RequestBody @Valid RequestUpdateDto requestDto) {
+
+		Request request = requestDto.transformToRequest();
 		request.setId(id);
 		Request updateRequest = requestService.update(request);
 		return ResponseEntity.ok(updateRequest);
