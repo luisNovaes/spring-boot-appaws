@@ -22,8 +22,8 @@ public class UserRepositoryTests {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Test
-	@Order(1)
+//	@Test
+//	@Order(1)
 	public void Asavetest() {
 
 		User user = new User();
@@ -39,8 +39,8 @@ public class UserRepositoryTests {
 
 	}
 
-	@Test
-	@Order(2)
+//	@Test
+//	@Order(2)
 	public void updateTest() {
 
 		Optional<User> userPresente = userRepository.findById(1L);
@@ -55,8 +55,8 @@ public class UserRepositoryTests {
 
 	}
 
-	@Test
-	@Order(3)
+//	@Test
+//	@Order(3)
 	public void getByIdtest() {
 
 		Optional<User> result = userRepository.findById(1L);
@@ -66,8 +66,8 @@ public class UserRepositoryTests {
 
 	}
 
-	@Test
-	@Order(4)
+//	@Test
+//	@Order(4)
 	public void listTest() {
 		List<User> user = userRepository.findAll();
 
@@ -75,8 +75,8 @@ public class UserRepositoryTests {
 
 	}
 
-	@Test
-	@Order(5)
+//	@Test
+//	@Order(5)
 	public void loginTest() {
 
 		Optional<User> result = userRepository.login("luis@gmail.com", "ma2020");
@@ -84,6 +84,14 @@ public class UserRepositoryTests {
 		User loggedUser = result.get();
 
 		assertThat(loggedUser.getId()).isEqualTo(1L);
+
+	}
+
+	@Test
+	//@Order(6)
+	public void updateRoleTest() {
+		int affectedRows = userRepository.updateRole(6L, Role.ADMINISTRATOR);
+		assertThat(affectedRows).isEqualTo(1);
 
 	}
 
