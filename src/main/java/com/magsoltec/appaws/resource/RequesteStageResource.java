@@ -1,5 +1,7 @@
 package com.magsoltec.appaws.resource;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magsoltec.appaws.domain.RequestStage;
+import com.magsoltec.appaws.dto.RequestStageSaveDto;
 import com.magsoltec.appaws.service.RequestStageService;
 
 @RestController
@@ -21,7 +24,8 @@ public class RequesteStageResource {
 	private RequestStageService requestStageService;
 
 	@PostMapping
-	public ResponseEntity<RequestStage> save(@RequestBody RequestStage requestStage) {
+	public ResponseEntity<RequestStage> save(@RequestBody @Valid RequestStageSaveDto requestStagedto) {
+		RequestStage requestStage = requestStagedto.transformeToRequestStage();
 		RequestStage createRequestStage = requestStageService.save(requestStage);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createRequestStage);
 
