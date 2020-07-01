@@ -15,8 +15,11 @@
 	<name>appaws</name>
 	<description>Demo project for Spring Boot</description>
 
+	<packaging>war</packaging>
+
 	<properties>
 		<java.version>1.8</java.version>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
