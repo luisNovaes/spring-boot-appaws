@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,6 +52,7 @@ public class UserResource {
 	@Autowired
 	private JwtManager jwtManager;
 
+	@Secured("ROLE_ADMINISTRATOR")
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody @Valid UserSaveDto userDto) {
 		User userToSave = userDto.transformToUser();
@@ -97,13 +99,8 @@ public class UserResource {
 				.getPrincipal();
 
 		String email = userSpring.getUsername();
-		List<String> roles = userSpring.getAuthorities()
-									   .stream()
-									   .map(authority -> authority
-									   .getAuthority())
-									   .collect(Collectors.toList());
-
-		
+		List<String> roles = userSpring.getAuthorities().stream().map(authority -> authority.getAuthority())
+				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(jwtManager.createToken(email, roles));
 	}
@@ -119,6 +116,7 @@ public class UserResource {
 		return ResponseEntity.ok(pm);
 	}
 
+	@Secured("ROLE_ADMINISTRATOR")
 	@PatchMapping("/role/{id}")
 	public ResponseEntity<?> updateRole(@PathVariable(name = "id") Long id,
 			@RequestBody @Valid UserUpdateRoleDto userDto) {
