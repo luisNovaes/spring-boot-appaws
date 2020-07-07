@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.magsoltec.appaws.dto.RequestSavedto;
 import com.magsoltec.appaws.dto.RequestUpdateDto;
 import com.magsoltec.appaws.model.PageModel;
 import com.magsoltec.appaws.model.PageRequestModel;
+import com.magsoltec.appaws.security.AccessManager;
 import com.magsoltec.appaws.service.RequestService;
 import com.magsoltec.appaws.service.RequestStageService;
 
@@ -33,6 +35,9 @@ public class RequestResource {
 	@Autowired
 	private RequestStageService requestStageService;
 
+	@Autowired
+	private AccessManager accessManager;
+
 	@PostMapping
 	public ResponseEntity<Request> save(@RequestBody @Valid RequestSavedto requestDto) {
 		Request request = requestDto.transformToRequest();
@@ -41,6 +46,7 @@ public class RequestResource {
 
 	}
 
+	@PreAuthorize("@accessManager.isRequestOwner(#id)")
 	@PutMapping("/{id}")
 	public ResponseEntity<Request> update(@PathVariable(name = "id") Long id,
 			@RequestBody @Valid RequestUpdateDto requestDto) {
