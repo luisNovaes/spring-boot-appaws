@@ -5,10 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.magsoltec.appaws.util.HashUtil;
 
-//@SpringBootTest
+@SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class HashUtilTests {
 
