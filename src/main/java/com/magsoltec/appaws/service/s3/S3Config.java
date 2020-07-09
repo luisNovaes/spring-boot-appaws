@@ -42,7 +42,7 @@ public class S3Config {
 
 	@Bean(name = "awsRegion")
 	public String getRegion() {
-		return Region.getRegion(Regions.US_EAST_1).getName();
+		return Region.getRegion(Regions.US_EAST_2).getName();
 	}
 
 	@Bean(name = "awsS3Bucket")
